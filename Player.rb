@@ -3,8 +3,11 @@ class Player
   attr_accessor :number, :picks
 
   def initialize(number, player_symbol)
+    # player number (player1, player2)
     @number = number
+    # picks will store successful pick attempts 
     @picks = []
+    # player_symbol should be an x or an o
     @player_symbol = player_symbol
   end
 
@@ -15,7 +18,7 @@ class Player
       # prompt
       player_x = nil
       while player_x < 0 || player_x > 2
-        puts "Pick a square row between 0 and 2 (x coordinate)"
+        puts "Pick a row between 0 and 2 (x coordinate)"
         player_x = gets.chomp
         
         if player_x == nil
@@ -27,7 +30,7 @@ class Player
 
       player_y = nil
       while player_y < 0 || player_x > 2
-        puts "Pick a square column between 0 and 2 (y coordinate)"
+        puts "Pick a column between 0 and 2 (y coordinate)"
         player_y = gets.chomp
 
         if player_y == nil
@@ -41,6 +44,8 @@ class Player
     # call Board.update_board. If return value is true, Board will update the grid
     if board_obj.update_board(player_x, player_y, player_symbol) == true
       green_light = true
+      # successful pick, update picks array 
+      picks.push([player_x, player_y])
     else 
       # while loop will continue reprompting until an empty square is found
       green_light = false
