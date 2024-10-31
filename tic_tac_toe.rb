@@ -1,5 +1,6 @@
 require_relative "Board"
 require_relative "Player"
+require_relative "Display"
 
 # create Board
 board = Board.new
@@ -8,41 +9,31 @@ board = Board.new
 player1 = Player.new(1, "X")
 player2 = Player.new(2, "O")
 
-# Game start
-# Game goes until the board is full (loop) or a player wins (explicit return)
+# players array for iteration
+players = [player1, player2]
 
-game_over = false
-while game_over == false
-  board.display_board
-  player1.pick_square(board)
-  board.display_board
-  if board.winner?
-    puts "---------------"
-    puts "Player 1 wins"
-    puts "---------------"
-    break
-  end
-  if board.board_full?
-    game_over = true
-    puts "---------------"
-    puts "Draw"
-    puts "---------------"
-    break
-  end
-  player2.pick_square(board)
-  board.display_board
-  if board.winner?
-    puts "---------------"
-    puts "Player 2 wins"
-    puts "---------------"
-    break
-  end
-  if board.board_full?
-    game_over = true
-    puts "Draw"
-    break
+# game loop
+def game_loop(players, board)
+  game_over = false
+  Display.display_board(board)
+  while game_over == false
+    players.each do |player|
+      player.pick_square(board, player)
+      Display.display_board(board)
+      if board.winner?
+        game_over = true
+        Display.display_message("Player #{player.number} wins")
+        # When player wins, return his picks
+        return player.picks
+      end
+      if board.board_full?
+        game_over = true
+        Display.display_message("Draw")
+        return "Draw"
+      end
+    end
   end
 end
 
-
-# test_grid = [[nil, nil, nil],["x" , "x", "o"],["o" , "o", "x"]]
+# Game start
+game_loop(players, board)

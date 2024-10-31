@@ -12,9 +12,10 @@ class Player
   end
 
   # Pick a square, if empty, update with player symbol
-  def pick_square(board_obj)
-    
+  def pick_square(board_obj, player)
+    Display.display_message("Player #{player.number} picks")
     green_light = nil
+
     while green_light != true
       green_light = false
       # prompt
@@ -30,10 +31,7 @@ class Player
         puts "Pick a column between 0 and 2 (y coordinate)"
         player_y = gets.chomp
         player_y = player_y.to_i
-      end  
-
-      
-    
+      end
     
       # call Board.update_board. If return value is true, Board will update the grid
       if board_obj.update_board(player_x, player_y, @player_symbol) == true
@@ -42,6 +40,7 @@ class Player
         @picks.push([player_x, player_y])
       else 
         # while loop will continue reprompting until an empty square is found
+        Display.display_message("Square not available, pick again")
         green_light = false
       end
     end

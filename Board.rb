@@ -8,27 +8,13 @@ class Board
   end
   # Update board on coordinate row, col with symbol
   def update_board(row, col, symbol)
-    # empty? true if square is available, false if not
+    # empty? true if square is available, false otherwise
     if self.grid[row][col] != "X" && self.grid[row][col] != "O"
       self.grid[row][col] = symbol
       return true
     else
       return false
     end
-   
-  end
-  # Display entire board with current state
-  def display_board
-    puts "======="
-    self.grid.each_with_index do |row, row_index|
-      print "|"
-      row.each_with_index do |col, col_index|
-        print self.grid[row_index][col_index]
-        print "|"
-      end
-      puts ""
-    end
-    puts "======="
   end
 
   def board_full?    
@@ -39,7 +25,7 @@ class Board
     winner = false
     # winning conditions
     @grid.each_with_index do |row, row_index|
-      # entire row has the same symbol
+      # entire row has the same symbol?
       if @grid[row_index][0] == @grid[row_index][1] && @grid[row_index][0] == @grid[row_index][2]
         if @grid[row_index][0] != " "
           winner = true
@@ -47,7 +33,7 @@ class Board
         end
       end
     end
-    # entire column has the same symbol
+    # entire column has the same symbol?
     for i in 0..2
       if @grid[0][i] == @grid[1][i] && @grid[0][i] == grid[2][i] 
         if @grid[0][i] != " "
@@ -57,7 +43,7 @@ class Board
       end
     end
 
-    # diagonal has the same symbol
+    # diagonal has the same symbol?
     if @grid[0][0] == @grid[1][1] && @grid[0][0] == @grid[2][2] ||  \
       @grid[2][0] == @grid[1][1] && @grid[2][0] == grid[0][2]
       if @grid[1][1] != " "
