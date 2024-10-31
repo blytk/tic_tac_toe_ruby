@@ -10,6 +10,7 @@ class Display
 
   def self.display_board(board)
       # Display entire board with current state
+      puts
       puts "-------------"
       board.grid.each_with_index do |row, row_index|
         print "| "
